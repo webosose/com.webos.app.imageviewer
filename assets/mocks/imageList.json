@@ -1,0 +1,60 @@
+{
+    "errorCode": 0,
+    "returnValue": true,
+    "errorText": "No Error",
+    "imageList": {
+        "results": [
+            {
+                "width": 720,
+                "last_modified_date": "Mon Nov  2 09:32:14 2020 GMT",
+                "dirty": false,
+                "file_path": "file:///tmp/usb/sdg/sdg1/LG_MONITOR/720_486.jpg",
+                "height": 486,
+                "file_size": 56442,
+                "title": "720_486.jpg",
+                "uri": "msc:///tmp/usb/sdg/sdg1/LG_MONITOR/720_486.jpg"
+            },
+            {
+                "width": 1488,
+                "last_modified_date": "Mon Nov  2 07:31:22 2020 GMT",
+                "dirty": false,
+                "file_path": "file:///tmp/usb/sdg/sdg1/LG_MONITOR/jpg.jpg",
+                "height": 2048,
+                "file_size": 218728,
+                "title": "jpg.jpg",
+                "uri": "msc:///tmp/usb/sdg/sdg1/LG_MONITOR/jpg.jpg"
+            },
+            {
+                "width": 1364,
+                "last_modified_date": "Thu Sep 17 09:53:30 2020 GMT",
+                "dirty": false,
+                "file_path": "file:///tmp/usb/sdg/sdg1/ch4_bluewater1.jpg",
+                "height": 1024,
+                "file_size": 1210895,
+                "title": "ch4_bluewater1.jpg",
+                "uri": "msc:///tmp/usb/sdg/sdg1/ch4_bluewater1.jpg"
+            },
+            {
+                "width": 1364,
+                "last_modified_date": "Thu Sep 17 09:53:30 2020 GMT",
+                "dirty": false,
+                "file_path": "file:///tmp/usb/sdg/sdg1/ch4_caution.jpg",
+                "height": 1024,
+                "file_size": 2216356,
+                "title": "ch4_caution.jpg",
+                "uri": "msc:///tmp/usb/sdg/sdg1/ch4_caution.jpg"
+            },
+            {
+                "width": 1248,
+                "last_modified_date": "Thu Sep 17 09:53:30 2020 GMT",
+                "dirty": false,
+                "file_path": "file:///tmp/usb/sdg/sdg1/ch4_chromatic2.jpg",
+                "height": 1804,
+                "file_size": 580569,
+                "title": "ch4_chromatic2.jpg",
+                "uri": "msc:///tmp/usb/sdg/sdg1/ch4_chromatic2.jpg"
+            }
+        ],
+        "count": 5
+    }
+}

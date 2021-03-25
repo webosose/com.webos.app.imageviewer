@@ -1,0 +1,33 @@
+{
+	"id": "com.webos.app.imageviewer",
+	"version": "0.0.1",
+	"vendor": "LGSI",
+	"type": "web",
+	"main": "index.html",
+	"title": "Imager Viewer app",
+	"icon": "icon.png",
+	"miniicon": "icon-mini.png",
+	"largeIcon": "icon-large.png",
+	"transparent": true,
+	"visible": true,
+	"lockable": false,
+	"noSplashOnLaunch": true,
+	"supportQuickStart": false,
+	"trustLevel": "trusted",
+	"requiredPermissions": [
+		"audio.operation",
+		"media.operation",
+		"mediacontroller.operation",
+		"mediaindexer.operation",
+		"mediapipeline.resourcemanagement",
+		"mediapipeline.operation",
+		"session.management",
+		"sleep.management",
+		"physicaldevice.management",
+		"physicaldevice.query"
+	],
+	"accessibility": {
+		"supportsAudioGuidance": true
+	},
+	"uiRevision": 1
+}
