@@ -1,0 +1,118 @@
+/* PhotoHeader */
+@import "../../../../goldstone/styles/variables.less";
+
+.fileItem {
+	background-size: cover;
+	background-repeat: no-repeat;
+
+	display: inline-block;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	box-sizing: border-box;
+	border: 6px solid transparent;
+	overflow: hidden;
+	color: white;
+
+	&:global(.spottable):focus>div>div {
+		background-color: rgba(0, 0, 0, 0.6);
+	}
+}
+
+.caption {
+	width: 94%;
+	padding: 188px 10px 10px 10px;
+
+	text-align: center;
+	font-size: @sand-heading-large-font-size;
+}
+
+.playerInfoHeader {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    vertical-align: top;
+    width: 100%;
+    left: 81px;
+    height: 177px;
+    overflow: visible;
+    // background-color: rgba(0,0,0,0.78);
+    padding: 10px;
+}
+.playerInfoTitle {
+    font-family: @sand-heading-large-font-family;
+    font-size: @sand-heading-large-font-size;
+    line-height: 64px;
+    color: #ffffff;
+    opacity: 0.8;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    margin: 39px 75px 39px 0;
+}
+
+.playerInfoSubTitle{
+    display: inline-block;
+    position:relative;
+    font-family: 'Moonstone';
+    font-weight: 300;
+    font-size: @sand-heading-medium-font-size;
+    color: #ffffff;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    letter-spacing: 0;
+    overflow: visible;
+    margin: 0 30px 0 9px;
+    white-space: nowrap;
+}
+
+.photoviewer-info-detailinfo {
+    display: inline-block;
+    white-space: normal;
+    max-width: 1200px;
+    margin: 0 21px 0 0;
+    opacity: 0.8;
+    overflow: visible;
+    vertical-align: middle;
+}
+
+.hide {
+	-webkit-animation: hideAnimation 2s linear forwards;
+}
+.show {
+	-webkit-animation: showAnimation 2s linear forwards;
+}
+
+:global(.enact-locale-right-to-left) & {
+    .playerInfoHeader {
+        left:0;
+        right:81px;
+    }
+    .playerInfoTitle {
+        margin: 39px 0 9px 75px;
+    }
+    .playerInfoSubTitle{
+        margin: 0 9px 0 30px;
+    }
+}
+
+@-webkit-keyframes hideAnimation {
+	0% {
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
+	100% {
+		-webkit-transform: translate3d(0, -100%, 0);
+		transform: translate3d(0, -100%, 0);
+	}
+}
+
+
+@-webkit-keyframes showAnimation {
+	0% {
+		-webkit-transform: translate3d(0, -100%, 0);
+		transform: translate3d(0, -100%, 0);
+	}
+	100% {
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
+}

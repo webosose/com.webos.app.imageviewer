@@ -2,7 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import ImageItem from '../../../goldstone/ImageItem';
+import ImageItem from '../../../goldstone/ImageItem/ImageItem';
 import {VirtualGridList} from '../../../goldstone/VirtualList/VirtualList';
 import ri from '@enact/ui/resolution';
 import placeHolderImg from '../../../assets/photovideo_splash.png';
@@ -10,7 +10,7 @@ import placeHolderImg from '../../../assets/photovideo_splash.png';
 const ImageList = ({imageList, handleNavigate}) => {
     const renderItem = ({index, ...rest}) => {
 		let thumbPath = imageList[index].file_path;
-		let encodedPath = thumbPath;
+		let encodedPath = thumbPath.replace(/ /g, '%20');
 
 		if (thumbPath && thumbPath.substring(0, 1) === '/') {
 			encodedPath = 'file:///' + encodedPath;
@@ -21,7 +21,7 @@ const ImageList = ({imageList, handleNavigate}) => {
 				{...rest}
 				src={encodedPath}
 				placeholder={placeHolderImg}
-				// onClick={() => handleNavigate('/photoplayer', imageList[index], index)}
+				onClick={() => handleNavigate('/imageviewer', imageList[index], index)}
 			>
 				{imageList[index].title}
 			</ImageItem>

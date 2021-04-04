@@ -1,0 +1,33 @@
+@import "../../../../goldstone/styles/colors.less";
+
+.zoomSlide {
+  height: 100%;
+  width: 100%;
+}
+.photoPreview {
+  border: 1px solid @sand-white;
+  width: 360px;
+  height: 240px;
+  position: absolute;
+  bottom: 20px;
+  right: 150px;
+  display: flex;
+  .photo {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  .magnifier {
+    width: 90%;
+    height: 90%;
+    border: 2px solid @sand-white;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .zoomSlider {
+    position: relative;
+    bottom: 20px;
+  }
+}

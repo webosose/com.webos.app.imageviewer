@@ -1,0 +1,58 @@
+@import "../../../goldstone/styles/variables.less";
+
+.photoPlayer {
+  display: flex;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100%;
+  max-height: 100%;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: hidden;
+  background-color: black;
+  .photoSlider {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .photoZoom {
+    display: flex;
+    width: 100%;
+    height: 100%;
+  }
+
+  .controlsWrapper {
+    width:100%;
+    min-width:100%;
+    max-width:100%;
+    position: absolute;
+    bottom: 3%;
+    .actionGuideWrapper {
+      font-size: 144px;
+      color: white;
+    }
+  }
+
+  .show {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+    animation: fade 1.5s;
+  }
+
+  .hide {
+    display: none;
+    opacity: 0;
+  }
+
+  @keyframes fade {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+}

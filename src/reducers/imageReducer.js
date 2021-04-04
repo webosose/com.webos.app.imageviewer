@@ -1,6 +1,5 @@
 import {types} from '../actions/types';
 
-
 const initialState = {
 	imageList: [],
 	imageListError: '',

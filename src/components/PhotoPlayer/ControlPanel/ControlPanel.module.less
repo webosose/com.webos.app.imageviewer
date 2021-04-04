@@ -1,0 +1,57 @@
+.controlPanel {
+  display: flex;
+  justify-content: center;
+  .button {
+    cursor: pointer;
+    color: white;
+  }
+}
+
+.setting {
+  position: absolute ;
+  top:1rem;
+  right:1rem;
+  background-color: rgba(23,23,23,0.8);
+  border-radius: 1rem;
+  width: 23%;
+  z-index: 1;
+}
+
+.header {
+  padding:1rem 0.5rem;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.subHeader {
+  font-size: 1rem;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.subHeader:hover, .selected {
+  box-shadow: 0 0 20px #000;
+  color: black;
+  background-color: #e6e6e6;
+  cursor: pointer;
+}
+.lastSubHeader {
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+.value {
+  font-size: 0.7rem;
+}
+
+.backButton {
+  margin:0;
+  right: 0;
+}
+.music-header {
+  font-size: 0.7rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -1,8 +1,9 @@
 import LS2Request from '@enact/webos/LS2Request';
 import {types} from './types';
 import {Image} from '../services';
-// import imagesList from '../../assets/mocks/imageList';
+// import imagesList from '../../assets/mocks/imageList.json';
 
+// console.log(imagesList.imageList.results)
 const getCurrentImageRequest = () => {
 	return {
 		type: types.FETCH_CURRENT_IMAGE_REQUEST
