@@ -7,21 +7,25 @@ import PropTypes from 'prop-types';
 import {TabLayout, Tab} from '../../../goldstone/TabLayout';
 import {Panel, Header} from '../../../goldstone/Panels';
 import ImageList from '../../components/ImageList/ImageList';
-import {getDeviceList} from '../../actions/deviceActions';
+import {getDeviceList, setCurrentDevice} from '../../actions/deviceActions';
 import {getImageList} from '../../actions/imageActions';
 import {changePath} from '../../actions/navigationActions';
-
 import css from './MainPanel.module.less';
 
-const MainPanel = ({devices, getListDevice, getListImage, imageList, handleNavigate, ...rest}) => {
-console.log(imageList)
+const MainPanel = ({devices, getListDevice, getListImage, imageList, handleNavigate, setSelectedDevice, ...rest}) => {
 	useEffect(() => {
 		getListDevice();
 	}, [getListDevice]);
 
-	const handleVideoNavigate = (url) => {
+	const handleImageNavigatation = (url) => {
 		handleNavigate(url);
 	};
+
+	const onSelectDevice = (device) => {
+		setSelectedDevice(device);
+		getListImage(device.uri)
+	}
+
 
 	return (
 		<Panel {...rest}>
@@ -35,13 +39,14 @@ console.log(imageList)
 								className={css.tab}
 								key={deviceList.uri}
 								icon="usb"
-								onTabClick={() => getListImage(deviceList.uri)}
+								// onTabClick={() => getListImage(deviceList.uri)}
+								onTabClick={() => onSelectDevice(deviceList)}
 								title={deviceList.name}
 							>
 								<ImageList
 									key={index}
 									imageList={imageList}
-									handleNavigate={handleVideoNavigate}
+									handleNavigate={handleImageNavigatation}
 								/>
 							</Tab>
 						)
@@ -75,7 +80,10 @@ const mapDispatchToState = dispatch => {
 		})),
 		getListImage: (uri) => dispatch(getImageList({
 			uri: uri
-		}))
+		})),
+		setSelectedDevice: (device) => dispatch(setCurrentDevice({
+			device: device
+		})),
 	};
 };
 

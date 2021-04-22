@@ -3,10 +3,12 @@ import {types} from '../actions/types';
 const initialState = {
 	isLoading: false,
 	deviceList: [],
+	currentDevice: {},
 	error: ''
 };
 
 const deviceListReducer = (state = initialState, action) => {
+	console.log('action', action)
 	switch (action.type) {
 		case types.FETCH_DEVICE_LIST_REQUEST : {
 			return {
@@ -30,6 +32,12 @@ const deviceListReducer = (state = initialState, action) => {
 				isLoading: true,
 				deviceList: [],
 				error: action.payload
+			};
+		}
+		case types.SET_CURRENT_DEVICE: {
+			return {
+				...state,
+				currentDevice: action.device
 			};
 		}
 		default: return state;

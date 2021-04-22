@@ -77,6 +77,13 @@ const getCurrentImageMetaData = ({uri, imageIndex}) => (dispatch) => {
 	});
 };
 
+const setSelectedImage = (imgId) => {
+	return {
+		type: types.SET_SELECTED_IMAGE,
+		imgId
+	}
+};
+
 export {
 	getCurrentImageRequest,
 	setCurrentImageSuccess,
@@ -84,5 +91,6 @@ export {
 	setImageListSuccess,
 	setImageListError,
 	getImageList,
-	getCurrentImageMetaData
+	getCurrentImageMetaData,
+	setSelectedImage
 };

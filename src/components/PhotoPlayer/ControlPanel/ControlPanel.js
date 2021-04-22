@@ -5,7 +5,7 @@ import IconButton from '../../../../goldstone/IconButton/IconButton';
 import componentCss from './ControlPanel.module.less';
 
 //  A placeholder to set images.
-const ControlPanel = ({iconSize = 'large', onZoom, rotateImage, settingsHandler, showSettings}) => {
+const ControlPanel = ({iconSize = 'large', onPlaylistOpen, onZoom, rotateImage, settingsHandler, showSettings}) => {
 
 	const clickHandler = useCallback(e => {
 		const {name} = e.currentTarget;
@@ -51,6 +51,16 @@ const ControlPanel = ({iconSize = 'large', onZoom, rotateImage, settingsHandler,
 				tooltipText={$L('Settings')}
 			>
 				gear
+			</IconButton>
+			<IconButton
+				aria-label="Playlist"
+				className={componentCss.button}
+				onClick={onPlaylistOpen}
+				size={iconSize}
+				tooltipText="Playlist"
+				title=""
+			>
+				list
 			</IconButton>
 		</div>
 	);

@@ -3,7 +3,8 @@ import {types} from '../actions/types';
 const initialState = {
 	imageList: [],
 	imageListError: '',
-	isImageListLoading: false
+	isImageListLoading: false,
+	currentImageId: 0
 };
 
 const imageListReducer = (state = initialState, action) => {
@@ -30,6 +31,12 @@ const imageListReducer = (state = initialState, action) => {
 				isImageListLoading: false,
 				imageList: [],
 				imageListError: action.payload
+			};
+		}
+		case types.SET_SELECTED_IMAGE: {
+			return {
+				...state,
+				currentImageId: action.imgId
 			};
 		}
 		default: return state;

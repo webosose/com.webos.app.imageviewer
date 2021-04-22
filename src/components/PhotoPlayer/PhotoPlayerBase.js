@@ -14,12 +14,16 @@ import Slide from './Slider/Slide';
 import SliderContent from './Slider/SliderContent';
 import {debounce, getSlidesOnCurrentIndex, getWidth} from './util/util';
 // import listPhotosData from '../../../assets/mocks/imageList.json';
+import IconButton from '../../../goldstone/IconButton/IconButton';
+import ImagePlayList from './ImagePlayList/ImagePlayList';
 import ZoomController from './ZoomController/ZoomController';
+import ImageIndex from './ImageIndex';
+import PhotoHeader from './PhotoHeader/PhotoHeader';
 import componentCss from './PhotoPlayer.module.less';
 
 const slideSpeed = {Slow: 9000, Normal: 6000, Fast: 3000};
 
-const PhotoPlayerBase = ({hideActionGuide, hideZoomUI, slides, slideDirection, startSlideIndex=0}) => {
+const PhotoPlayerBase = ({handleNavigate, hideActionGuide, hideZoomUI, slides, slideDirection, startSlideIndex=0}) => {
 	const settingsContext = useSettingsContext();
 	const contextSettingsState = settingsContext.state || settingsContext;
 	const {currentSettings: {Speed, Transition}} = contextSettingsState;
@@ -29,22 +33,19 @@ const PhotoPlayerBase = ({hideActionGuide, hideZoomUI, slides, slideDirection, s
 
 	const autoPlayRef = useRef();
 	const transitionRef = useRef();
-	const flipRef = useRef();
 	const resizeRef = useRef();
 
 	const [isPlaying, setPlaying] = useState(false);
 	const [isActionGuideOpen, setActionGuideOpen] = useState(true);
+	const [isPlaylistOpen, setPlaylistOpen] = useState(false);
 	const [showSettings, setSettings] = useState(false);
-	const [flipped, setFlipped] = useState(false);
-	const [split, setSplit] = useState(false);
 	const [direction, setDirection] = useState('right');
 	const [state, setTransition] = useState({
 		activeSlide: startSlideIndex,
 		translate: getWidth(),
 		transition: 1,
 		_slides: Transition === 'Slide' ?
-			[lastSlide, firstSlide, secondSlide] :
-			Transition === 'Flip' ? [firstSlide, secondSlide] : [firstSlide]
+			[lastSlide, firstSlide, secondSlide] : [firstSlide]
 	});
 	const [isSlideShowOpen, setSlideShowOpen] = useState(true);
 	const [isControlsHidden, setControlsHidden] = useState(false);
@@ -66,28 +67,8 @@ const PhotoPlayerBase = ({hideActionGuide, hideZoomUI, slides, slideDirection, s
 		});
 	};
 
-	const flipTransition = () => {
-		if (flipped) {
-			let nextSlideIndex, nextSlideValue;
-			if (direction === 'right') {
-				nextSlideIndex = activeSlide === slides.length - 1 ? 0 : activeSlide + 1;
-				nextSlideValue = nextSlideIndex === slides.length - 1 ? slides[0] : slides[nextSlideIndex + 1];
-			} else {
-				nextSlideIndex = activeSlide === 0 ? slides.length - 1 : activeSlide - 1;
-				nextSlideValue = nextSlideIndex === 0 ? slides[slides.length - 1] : slides[nextSlideIndex - 1];
-			}
-			setFlipped(false);
-			setTransition({
-				...state,
-				activeSlide: nextSlideIndex,
-				_slides: [slides[nextSlideIndex], nextSlideValue]
-			});
-		}
-	};
-
 	const setNextSlide = (index) => {
 		const nextSlideIndex = index > slides.length - 1 ? 0 : index < 0 ? slides.length - 1 : index;
-		setSplit(false);
 		setTransition({
 			...state,
 			activeSlide: nextSlideIndex,
@@ -96,44 +77,24 @@ const PhotoPlayerBase = ({hideActionGuide, hideZoomUI, slides, slideDirection, s
 	};
 
 	const nextSlide = useCallback(() => {
-		if (Transition === 'Flip') {
-			setFlipped(true);
-			setDirection('right');
-		} else if (Transition === 'Split' && !split) {
-			setSplit(true);
-			setDirection('right');
-		} else {
-			const nextSlideIndex = activeSlide === slides.length - 1 ? 0 : activeSlide + 1;
-			setTransition({
-				...state,
-				translate: translate + getWidth(),
-				activeSlide: nextSlideIndex,
-				_slides: Transition === 'Slide' ? _slides : [slides[nextSlideIndex]]
-			});
-		}
-	}, [_slides, activeSlide, slides, Transition, translate, split, state]);
+		const nextSlideIndex = activeSlide === slides.length - 1 ? 0 : activeSlide + 1;
+		setTransition({
+			...state,
+			translate: translate + getWidth(),
+			activeSlide: nextSlideIndex,
+			_slides: Transition === 'Slide' ? _slides : [slides[nextSlideIndex]]
+		});
+	}, [_slides, activeSlide, slides, Transition, translate, state]);
 
 	const prevSlide = useCallback(() => {
 		const prevSlideIndex = activeSlide === 0 ? slides.length - 1 : activeSlide - 1;
-		if (Transition === 'Flip') {
-			setTransition({
-				...state,
-				_slides: [slides[activeSlide], slides[prevSlideIndex]]
-			});
-			setFlipped(true);
-			setDirection('left');
-		} else if (Transition === 'Split' && !split) {
-			setSplit(true);
-			setDirection('left');
-		} else {
-			setTransition({
-				...state,
-				translate: 0,
-				activeSlide: prevSlideIndex,
-				_slides: Transition === 'Slide' ? _slides : [slides[prevSlideIndex]]
-			});
-		}
-	}, [activeSlide, Transition, slides, split, _slides, state]);
+		setTransition({
+			...state,
+			translate: 0,
+			activeSlide: prevSlideIndex,
+			_slides: Transition === 'Slide' ? _slides : [slides[prevSlideIndex]]
+		});
+	}, [activeSlide, Transition, slides, _slides, state]);
 
 	const updateCurrentIndex = useCallback((currentIndex) => {
 		if (currentIndex !== activeSlide) {
@@ -163,9 +124,14 @@ const PhotoPlayerBase = ({hideActionGuide, hideZoomUI, slides, slideDirection, s
 	}, [rotation]);
 
 	const onZoom = useCallback(() => {
+		setPlaying(false)
 		setControlsHidden(true);
 		setSlideShowOpen(false);
 	}, []);
+
+	const onPlaylistOpen = useCallback(() => {
+		setPlaylistOpen(!isPlaylistOpen)
+	}, [isPlaylistOpen]);
 
 	const renderImages = useCallback(() => {
 		return _slides.map((slide, i) => {
@@ -173,23 +139,24 @@ const PhotoPlayerBase = ({hideActionGuide, hideZoomUI, slides, slideDirection, s
 				currentSlide={activeSlide}
 				setNextSlide={setNextSlide}
 				slideDirection={direction}
-				toggleSplit={setSplit}
 				index={i}
 				key={slide + i}
 				rotation={rotation}
-				split={split}
 				url={slide.file_path}
 				width={getWidth()}
+				imgHeight={slide.height}
+				imgWidth={slide.width}
+				isPlaying={isPlaying}
+				setControlsHidden={setControlsHidden}
 			/>);
 		});
-	}, [_slides, activeSlide, rotation, setNextSlide, split]);
+	}, [_slides, activeSlide, rotation, setNextSlide]);
 
 	useEffect(() => {
 		const setPlayRTL = slideDirection === 'left' ? nextSlide : prevSlide;
 		autoPlayRef.current = setPlayRTL;
 		transitionRef.current = slideTransition;
 		resizeRef.current = handleResize;
-		flipRef.current = flipTransition;
 	});
 
 	useEffect(() => {
@@ -203,11 +170,7 @@ const PhotoPlayerBase = ({hideActionGuide, hideZoomUI, slides, slideDirection, s
 
 		const playSmooth = e => {
 			const {className} = e.target;
-			if (className.includes('SliderContent_flip-card')) {
-				if (!flipped) {
-					flipRef.current();
-				}
-			} else if (className.includes('SliderContent')) {
+			if (className.includes('SliderContent')) {
 				transitionRef.current();
 			}
 		};
@@ -224,26 +187,26 @@ const PhotoPlayerBase = ({hideActionGuide, hideZoomUI, slides, slideDirection, s
 			clearInterval(interval);
 		}
 
-		const handleControls = () => {
-			if (isPlaying) {
-				setControlsHidden(false);
-			}
-		};
+		// const handleControls = () => {
+		// 	if (isPlaying) {
+		// 		setControlsHidden(false);
+		// 	}
+		// };
 
 		const transitionEnd = window.addEventListener('transitionend', playSmooth);
 		const onResize = window.addEventListener('resize', debounce(resize, 200));
-		const onMouseMove = window.addEventListener('mousemove', debounce(handleControls, 1000));
+		// const onMouseMove = window.addEventListener('mousemove', debounce(handleControls, 1000));
 
 		return () => {
 			clearInterval(interval);
 			window.removeEventListener('transitionend', transitionEnd);
 			window.removeEventListener('resize', onResize);
-			window.removeEventListener('mousemove', onMouseMove);
+			// window.removeEventListener('mousemove', onMouseMove);
 		};
-	}, [Speed, flipped, isPlaying, isSlideShowOpen, playSpeed, split]);
+	}, [Speed, isPlaying, isSlideShowOpen, playSpeed]);
 
 	useEffect(() => {
-		if (Transition !== 'Slide' && Transition !== 'Flip') {
+		if (Transition !== 'Slide') {
 			setTransition(prevState => (
 				{
 					...prevState,
@@ -283,9 +246,30 @@ const PhotoPlayerBase = ({hideActionGuide, hideZoomUI, slides, slideDirection, s
 		setRotation(0);
 	}, [activeSlide]);
 
-	const getSlideWidth = Transition === 'Flip' ? getWidth() : getWidth() * _slides.length;
+	const getSlideWidth = getWidth() * _slides.length;
+	const navigateBack = () => {
+		if(!isSlideShowOpen) {
+			setSlideShowOpen(true)
+		} else {
+			handleNavigate('home')
+		}
+	}
 	return (
 		<div className={componentCss.photoPlayer}>
+			<div
+				className={classNames({[componentCss.show]: !showSettings, [componentCss.hide]: showSettings})}
+				onClick={navigateBack}
+			>
+				<IconButton
+					className={componentCss.backButton}
+					iconOnly
+					size="large"
+					title=""
+				>
+					arrowhookleft
+				</IconButton>
+			</div>
+
 			<div
 				className={classNames({
 					[componentCss.photoSlider]: true,
@@ -294,7 +278,6 @@ const PhotoPlayerBase = ({hideActionGuide, hideZoomUI, slides, slideDirection, s
 				})}
 			>
 				<SliderContent
-					isFlipped={flipped}
 					direction={direction}
 					translate={translate}
 					transition={transition}
@@ -309,11 +292,24 @@ const PhotoPlayerBase = ({hideActionGuide, hideZoomUI, slides, slideDirection, s
 			>
 				<ZoomController
 					imageUrl={slides[activeSlide].file_path}
+					setSlideShowOpen={setSlideShowOpen}
 				/>
 			</div>
 			<div
 				className={classNames({[componentCss.controlsWrapper]: true, [componentCss.show]: !isControlsHidden && isSlideShowOpen, [componentCss.hide]: isControlsHidden || !isSlideShowOpen})}
 			>
+				<div
+					className={classNames({[componentCss.photoHeader]: true})}
+				>
+					<PhotoHeader
+						currentPhoto={slides[activeSlide]} photoInfo={slides[activeSlide].photoInfo}
+					/>
+				</div>
+				<div
+					className={classNames({[componentCss.photoIndex]: true})}
+				>
+					<ImageIndex currentIndex={activeSlide} length={slides.length} />
+				</div>
 				<div
 					className={classNames({[componentCss.navigationsWrapper]: true})}
 				>
@@ -332,14 +328,23 @@ const PhotoPlayerBase = ({hideActionGuide, hideZoomUI, slides, slideDirection, s
 						rotateImage={rotateImage}
 						settingsHandler={setSettings}
 						showSettings={showSettings}
+						onPlaylistOpen={onPlaylistOpen}
 					/>
+					<div
+						className={classNames({[componentCss.imagePlayList]: true, [componentCss.show]: isPlaylistOpen, [componentCss.hide]: !isPlaylistOpen})}
+					>
+						<ImagePlayList
+							imageList={slides}
+							updateCurrentIndex={updateCurrentIndex}
+						/>
+					</div>
 				</div>
 
 				<div
 					className={classNames({[componentCss.actionGuideWrapper]: true, [componentCss.show]: isActionGuideOpen, [componentCss.hide]: !isActionGuideOpen})}
 				>
-					<ActionGuide icon="arrowsmalldown">
-						Scroll down or Press down key
+					<ActionGuide onClick={() => setActionGuideOpen(false)} icon="arrowsmalldown">
+						Press Here to Enable Settings
 					</ActionGuide>
 				</div>
 			</div>

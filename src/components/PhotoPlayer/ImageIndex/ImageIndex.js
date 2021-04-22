@@ -3,7 +3,7 @@ import componentCss from './ImageIndex.module.less';
 
 const ImageIndex = ({currentIndex, length}) => {
 	return (
-		<div className={componentCss['image-index']}>{currentIndex + 1}/{length}</div>
+		<div className={componentCss.imageIndex}>{currentIndex + 1}/{length}</div>
 	);
 };
 

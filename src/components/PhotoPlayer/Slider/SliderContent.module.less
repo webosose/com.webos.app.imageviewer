@@ -3,24 +3,7 @@
   width: 100%;
   height: 100%;
 }
-.flip {
-  perspective: 2000px;
-  -webkit-perspective: 2000px;
-}
-.flip-card {
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  -webkit-transition: all 1s linear;
-  transition: all 1s linear;
-}
-.is-flipped {
-  -webkit-transform: rotateY(180deg);
-  transform: rotateY(180deg);
-}
-.is-flipped-anti {
-  -webkit-transform: rotateY(-180deg);
-  transform: rotateY(-180deg);
-}
+
 .fade-in {
   -webkit-animation: fadeIn 6s;
   -webkit-animation-fill-mode: forwards;
@@ -33,8 +16,4 @@
   to {
     opacity: 1;
   }
-}
-
-.flip-horizontally {
-  -webkit-transform: scaleX(-1);
 }

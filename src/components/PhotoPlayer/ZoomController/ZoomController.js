@@ -3,7 +3,7 @@ import Image from '@enact/ui/Image';
 import PropTypes from 'prop-types';
 import Slider, {SliderTooltip} from '../../../../goldstone/Slider/Slider';
 import {getWidth} from '../util/util';
-import onErrorImg from '../../../../assets/photovideo_splash.png';;
+import onErrorImg from '../../../../assets/photovideo_splash.png';
 import componentCss from './ZoomController.module.less';
 
 const ZoomArea = ({fallBackImg = onErrorImg, url, width, zoomRef}) => {

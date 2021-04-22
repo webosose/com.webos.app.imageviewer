@@ -14,7 +14,7 @@ import componentCss from './ControlPanel.module.less';
 
 const options = {
 	Size: ['Original', 'Full'],
-	Transition: ['Fade In', 'Flip', 'Slide', 'Split', 'None'],
+	Transition: ['Fade In', 'Slide', 'None'],
 	Speed: ['Slow', 'Normal', 'Fast']
 };
 const SETTING_HEADER = 'Photo Settings';

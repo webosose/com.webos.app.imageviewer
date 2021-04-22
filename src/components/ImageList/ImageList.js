@@ -2,12 +2,20 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import ImageItem from '../../../goldstone/ImageItem/ImageItem';
 import {VirtualGridList} from '../../../goldstone/VirtualList/VirtualList';
 import ri from '@enact/ui/resolution';
+import {setSelectedImage} from '../../actions/imageActions';
 import placeHolderImg from '../../../assets/photovideo_splash.png';
 
-const ImageList = ({imageList, handleNavigate}) => {
+const ImageGridList = ({imageList, handleNavigate, setSelectedImageId}) => {
+	const updateNavigationPath = (imgIndex) => {
+		console.log(imgIndex);
+		handleNavigate('imageviewer');
+		setSelectedImageId(imgIndex);
+	}
+
     const renderItem = ({index, ...rest}) => {
 		let thumbPath = imageList[index].file_path;
 		let encodedPath = thumbPath.replace(/ /g, '%20');
@@ -21,7 +29,7 @@ const ImageList = ({imageList, handleNavigate}) => {
 				{...rest}
 				src={encodedPath}
 				placeholder={placeHolderImg}
-				onClick={() => handleNavigate('/imageviewer', imageList[index], index)}
+				onClick={() => updateNavigationPath(index)}
 			>
 				{imageList[index].title}
 			</ImageItem>
@@ -30,7 +38,7 @@ const ImageList = ({imageList, handleNavigate}) => {
 	imageList = imageList || [];
     return (
 		imageList.length === 0 ?
-			<h3>No Photo, Video or folders exist in storage device</h3 > :
+			<h3>No photos exist in storage device</h3 > :
 			<VirtualGridList
 				direction='vertical'
 				dataSize={imageList.length}
@@ -42,6 +50,13 @@ const ImageList = ({imageList, handleNavigate}) => {
 			/>
 	);
 }
+
+const ImageList = connect(
+	null,
+	{
+		setSelectedImageId: setSelectedImage
+	}
+)(ImageGridList);
 
 ImageList.propTypes = {
 	handleNavigate: PropTypes.func.isRequired,

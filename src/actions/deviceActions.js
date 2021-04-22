@@ -34,8 +34,16 @@ const getDeviceList = ({subscribe}) => (dispatch) => {
 	});
 };
 
+const setCurrentDevice = (device) => {
+	return {
+		type: types.SET_CURRENT_DEVICE,
+		device
+	}
+};
+
 export {
 	getDeviceList,
 	setDeviceListSuccess,
-	setDeviceListError
+	setDeviceListError,
+	setCurrentDevice
 };

@@ -8,7 +8,7 @@ const SettingsContext = React.createContext({
 		{id: 3, text: 'Speed', value: 'Normal'}
 	],
 	currentSettings: {
-		Size: 'Full',
+		Size: 'Original',
 		Transition: 'Fade In',
 		Speed: 'Fast'
 	}
