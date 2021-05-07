@@ -17,6 +17,12 @@ const MainPanel = ({devices, getListDevice, getListImage, imageList, handleNavig
 		getListDevice();
 	}, [getListDevice]);
 
+	const handleClose = () => {
+		if(typeof window !== 'undefined') {
+			window.close();
+		}
+	}
+
 	const handleImageNavigatation = (url) => {
 		handleNavigate(url);
 	};
@@ -26,10 +32,11 @@ const MainPanel = ({devices, getListDevice, getListImage, imageList, handleNavig
 		getListImage(device.uri)
 	}
 
-
 	return (
 		<Panel {...rest}>
-			<Header />
+			<Header
+				onClose={handleClose}
+			/>
 			{console.log(devices)}
 			<TabLayout>
 				{devices.map((device) => {
