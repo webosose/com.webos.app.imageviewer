@@ -1,5 +1,8 @@
 import {types} from './types';
 import {Device} from '../services';
+import {setImageListSuccess} from './imageActions';
+import {changePath} from './navigationActions';
+import {isUsbConnected, savePrevDevice} from '../utils/index';
 
 const getDeviceListRequest = () => {
 	return {
@@ -21,11 +24,16 @@ const setDeviceListError = (errMessage) => {
 	};
 };
 
-const getDeviceList = ({subscribe}) => (dispatch) => {
+const getDeviceList = () => (dispatch, getState) => {
 	dispatch(getDeviceListRequest());
 	Device.getDeviceList({
-		subscribe: subscribe,
+		subscribe: true,
 		onSuccess: (res) => {
+			dispatch(changePath('home'))
+			if(!isUsbConnected(res.pluginList, getState().devices.currentDevice)) {
+				dispatch(setImageListSuccess([]));
+				savePrevDevice({})
+			}
 			dispatch(setDeviceListSuccess(res.pluginList));
 		},
 		onFailure: (err) => {
@@ -35,6 +43,7 @@ const getDeviceList = ({subscribe}) => (dispatch) => {
 };
 
 const setCurrentDevice = (device) => {
+	savePrevDevice(device)
 	return {
 		type: types.SET_CURRENT_DEVICE,
 		device

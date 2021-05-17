@@ -23,7 +23,7 @@ import componentCss from './PhotoPlayer.module.less';
 
 const slideSpeed = {Slow: 9000, Normal: 6000, Fast: 3000};
 
-const PhotoPlayerBase = ({handleNavigate, hideActionGuide, hideZoomUI, slides, slideDirection, startSlideIndex=0}) => {
+const PhotoPlayerBase = ({handleNavigate, hideActionGuide, hideZoomUI, slides=[], slideDirection, startSlideIndex=0}) => {
 	const settingsContext = useSettingsContext();
 	const contextSettingsState = settingsContext.state || settingsContext;
 	const {currentSettings: {Speed, Transition}} = contextSettingsState;
@@ -255,6 +255,7 @@ const PhotoPlayerBase = ({handleNavigate, hideActionGuide, hideZoomUI, slides, s
 		}
 	}
 	return (
+		slides.length > 0 ?
 		<div className={componentCss.photoPlayer}>
 			<div
 				className={classNames({[componentCss.show]: !showSettings, [componentCss.hide]: showSettings})}
@@ -291,7 +292,7 @@ const PhotoPlayerBase = ({handleNavigate, hideActionGuide, hideZoomUI, slides, s
 				className={classNames({[componentCss.photoZoom]: true, [componentCss.show]: !isSlideShowOpen, [componentCss.hide]: isSlideShowOpen})}
 			>
 				<ZoomController
-					imageUrl={slides[activeSlide].file_path}
+					imageUrl={slides[activeSlide] && slides[activeSlide].file_path}
 					setSlideShowOpen={setSlideShowOpen}
 				/>
 			</div>
@@ -302,7 +303,7 @@ const PhotoPlayerBase = ({handleNavigate, hideActionGuide, hideZoomUI, slides, s
 					className={classNames({[componentCss.photoHeader]: true})}
 				>
 					<PhotoHeader
-						currentPhoto={slides[activeSlide]} photoInfo={slides[activeSlide].photoInfo}
+						currentPhoto={slides[activeSlide]}
 					/>
 				</div>
 				<div
@@ -347,6 +348,22 @@ const PhotoPlayerBase = ({handleNavigate, hideActionGuide, hideZoomUI, slides, s
 						Press Here to Enable Settings
 					</ActionGuide>
 				</div>
+			</div>
+		</div>
+		:
+		<div className={componentCss.photoPlayer}>
+			<div
+				className={classNames({[componentCss.show]: !showSettings, [componentCss.hide]: showSettings})}
+				onClick={navigateBack}
+			>
+				<IconButton
+					className={componentCss.backButton}
+					iconOnly
+					size="large"
+					title=""
+				>
+					arrowhookleft
+				</IconButton>
 			</div>
 		</div>
 	);

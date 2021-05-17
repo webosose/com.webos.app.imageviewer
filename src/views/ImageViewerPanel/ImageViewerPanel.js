@@ -5,7 +5,7 @@ import {Panel} from '../../../goldstone/Panels';
 import PhotoPlayer from '../../components/PhotoPlayer/PhotoPlayer';
 import {changePath} from '../../actions/navigationActions';
 
-const ImageViewerPanel = ({currentImageId, imageList, handleNavigate, ...rest}) => {
+const ImageViewerPanel = ({currentImageId, imageList=[], handleNavigate, ...rest}) => {
     return (
         <Panel {...rest} >
             <PhotoPlayer

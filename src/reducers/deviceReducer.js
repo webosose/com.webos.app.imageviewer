@@ -1,9 +1,13 @@
 import {types} from '../actions/types';
+import {loadPrevDevice} from '../utils/index';
+
+
+let prevDevice = loadPrevDevice;
 
 const initialState = {
 	isLoading: false,
 	deviceList: [],
-	currentDevice: {},
+	currentDevice: prevDevice || {},
 	error: ''
 };
 

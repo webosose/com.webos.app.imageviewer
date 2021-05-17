@@ -8,11 +8,10 @@ import {TabLayout, Tab} from '../../../goldstone/TabLayout';
 import {Panel, Header} from '../../../goldstone/Panels';
 import ImageList from '../../components/ImageList/ImageList';
 import {getDeviceList, setCurrentDevice} from '../../actions/deviceActions';
-import {getImageList} from '../../actions/imageActions';
-import {changePath} from '../../actions/navigationActions';
+import {getImageList, setSelectedImage} from '../../actions/imageActions';
 import css from './MainPanel.module.less';
 
-const MainPanel = ({devices, getListDevice, getListImage, imageList, handleNavigate, setSelectedDevice, ...rest}) => {
+const MainPanel = ({devices, getListDevice, getListImage, setSelectedDevice, setSelectedImageId, ...rest}) => {
 	useEffect(() => {
 		getListDevice();
 	}, [getListDevice]);
@@ -23,11 +22,8 @@ const MainPanel = ({devices, getListDevice, getListImage, imageList, handleNavig
 		}
 	}
 
-	const handleImageNavigatation = (url) => {
-		handleNavigate(url);
-	};
-
 	const onSelectDevice = (device) => {
+		setSelectedImageId(0)
 		setSelectedDevice(device);
 		getListImage(device.uri)
 	}
@@ -37,11 +33,11 @@ const MainPanel = ({devices, getListDevice, getListImage, imageList, handleNavig
 			<Header
 				onClose={handleClose}
 			/>
-			{console.log(devices)}
 			<TabLayout>
 				{devices.map((device) => {
 					return device.deviceList.length > 0 && device.deviceList.map((deviceList, index) => {
 						return (
+							deviceList.available ?
 							<Tab
 								className={css.tab}
 								key={deviceList.uri}
@@ -52,10 +48,9 @@ const MainPanel = ({devices, getListDevice, getListImage, imageList, handleNavig
 							>
 								<ImageList
 									key={index}
-									imageList={imageList}
-									handleNavigate={handleImageNavigatation}
 								/>
 							</Tab>
+							: null
 						)
 					})
 				})}
@@ -67,31 +62,21 @@ const MainPanel = ({devices, getListDevice, getListImage, imageList, handleNavig
 MainPanel.propTypes = {
 	deviceList: PropTypes.array,
 	getListDevice: PropTypes.func,
-	getListImage: PropTypes.func,
-	handleNavigate: PropTypes.func,
-	imageList: PropTypes.array
+	getListImage: PropTypes.func
 };
 
-const mapStateToProps = ({devices, images}) => {
+const mapStateToProps = ({devices}) => {
 	return {
-		devices: devices.deviceList,
-		imageList: images.imageList.results
+		devices: devices.deviceList
 	};
 };
 
-const mapDispatchToState = dispatch => {
-	return {
-		handleNavigate: (path) => dispatch(changePath(path)),
-		getListDevice: () => dispatch(getDeviceList({
-			subscribe: true
-		})),
-		getListImage: (uri) => dispatch(getImageList({
-			uri: uri
-		})),
-		setSelectedDevice: (device) => dispatch(setCurrentDevice({
-			device: device
-		})),
-	};
-};
-
-export default connect(mapStateToProps, mapDispatchToState)(MainPanel);
+export default connect(
+	mapStateToProps,
+	{
+		getListDevice: getDeviceList,
+		getListImage: getImageList,
+		setSelectedDevice: setCurrentDevice,
+		setSelectedImageId: setSelectedImage
+	}
+)(MainPanel);

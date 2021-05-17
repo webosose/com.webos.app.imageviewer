@@ -45,7 +45,7 @@ const setImageListError = (message) => {
 	};
 };
 
-const getImageList = ({uri}) => (dispatch) => {
+const getImageList = (uri) => (dispatch) => {
 	dispatch(getImageListRequest());
 	Image.getImageList({
 		uri: uri,
@@ -57,6 +57,7 @@ const getImageList = ({uri}) => (dispatch) => {
 			}
 		},
 		onFailure: (err) => {
+			console.log(err);
 			dispatch(setImageListError(err.errorText));
 		}
 	});
@@ -67,7 +68,7 @@ const getCurrentImageMetaData = ({uri, imageIndex}) => (dispatch) => {
 	return new LS2Request().send({
 		service: 'luna://com.webos.service.mediaindexer',
 		method: 'getImageMetadata',
-		parameters: {uri:uri},
+		parameters: {uri: uri},
 		onSuccess: ({metadata}) => {
 			dispatch(setCurrentImageSuccess(metadata, imageIndex));
 		},

@@ -7,14 +7,20 @@ import ImageItem from '../../../goldstone/ImageItem/ImageItem';
 import {VirtualGridList} from '../../../goldstone/VirtualList/VirtualList';
 import ri from '@enact/ui/resolution';
 import {setSelectedImage} from '../../actions/imageActions';
+import {changePath} from '../../actions/navigationActions';
 import placeHolderImg from '../../../assets/photovideo_splash.png';
 
-const ImageGridList = ({imageList, handleNavigate, setSelectedImageId}) => {
+const ImageGridList = ({currentImageId, imageList=[], handleNavigate, setSelectedImageId}) => {
 	const updateNavigationPath = (imgIndex) => {
 		console.log(imgIndex);
 		handleNavigate('imageviewer');
 		setSelectedImageId(imgIndex);
 	}
+
+	const getScrollTo = (scrollTo) => {
+		scrollTo({animate: false, focus: true, index: currentImageId});
+	};
+
 
     const renderItem = ({index, ...rest}) => {
 		let thumbPath = imageList[index].file_path;
@@ -36,10 +42,11 @@ const ImageGridList = ({imageList, handleNavigate, setSelectedImageId}) => {
 		);
 	};
 	imageList = imageList || [];
-    return (
+	return (
 		imageList.length === 0 ?
 			<h3>No photos exist in storage device</h3 > :
 			<VirtualGridList
+				cbScrollTo={getScrollTo}
 				direction='vertical'
 				dataSize={imageList.length}
 				itemRenderer={renderItem}
@@ -51,15 +58,23 @@ const ImageGridList = ({imageList, handleNavigate, setSelectedImageId}) => {
 	);
 }
 
+const mapStateToProps = ({images}) => {
+	return {
+		imageList: images.imageList.results,
+		currentImageId: images.currentImageId
+	};
+};
+
 const ImageList = connect(
-	null,
+	mapStateToProps,
 	{
+		handleNavigate: changePath,
 		setSelectedImageId: setSelectedImage
 	}
 )(ImageGridList);
 
 ImageList.propTypes = {
-	handleNavigate: PropTypes.func.isRequired,
+	handleNavigate: PropTypes.func,
 	imageList: PropTypes.array
 };
 
