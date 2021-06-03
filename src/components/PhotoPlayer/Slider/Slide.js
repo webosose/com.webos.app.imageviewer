@@ -24,7 +24,14 @@ const Slide = ({currentSlide, fallBackImg = onErrorImg, imgHeight, imgWidth, isP
 	const fitImgHeight = imgHeight > innerHeight ? innerHeight : imgHeight;
 
 	let fitImageBackground;
-	fitImageBackground = Size === 'Original' ? {backgroundSize: `${fitImgWidth}px ${fitImgHeight}px`} : {backgroundSize: `${fitImgWidth}px ${innerHeight}px`}
+	if(Size === 'Original') {
+		fitImageBackground = {backgroundSize: `${fitImgWidth}px ${fitImgHeight}px`}
+	} else {
+		(imgWidth > innerWidth && imgHeight > innerHeight) ?
+		fitImageBackground = {backgroundSize: `${fitImgWidth}px ${innerHeight}px`} :
+		fitImageBackground = {backgroundSize: 'contain'}
+	}
+
 	if([90, 270].includes(rotation)) {
 		fitImageBackground = {backgroundSize: `${innerHeight}px auto`}
 	}

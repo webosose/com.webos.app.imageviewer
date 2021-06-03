@@ -8,7 +8,7 @@
  */
 let {addLocalizedFont, generateFontRules, generateFontOverrideRules} = require('@enact/ui/internal/localized-fonts');
 
-const fontName = 'Sandstone';
+let fontName = 'Sandstone';
 
 // Locale Configuration Block
 //
@@ -41,7 +41,7 @@ const fonts = {
 };
 
 // Duplications and alternate locale names
-fonts['en-JP'] = fonts['ja'];
+fonts['en-JP'] = fonts.ja;
 
 addLocalizedFont(fontName, fonts);
 
