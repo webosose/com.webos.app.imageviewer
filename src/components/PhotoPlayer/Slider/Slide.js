@@ -27,8 +27,8 @@ const Slide = ({currentSlide, fallBackImg = onErrorImg, imgHeight, imgWidth, isP
 	if(Size === 'Original') {
 		fitImageBackground = {backgroundSize: `${fitImgWidth}px ${fitImgHeight}px`}
 	} else {
-		(imgWidth > innerWidth && imgHeight > innerHeight) ?
-		fitImageBackground = {backgroundSize: `${fitImgWidth}px ${innerHeight}px`} :
+		(imgWidth > innerWidth && imgHeight > innerHeight || imgWidth > innerHeight) ?
+		fitImageBackground = {backgroundSize: `${innerWidth}px ${innerHeight}px`} :
 		fitImageBackground = {backgroundSize: 'contain'}
 	}
 

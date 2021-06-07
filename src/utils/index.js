@@ -1,6 +1,9 @@
 const isUsbConnected = (deviceList, prevDevice={}) => {
-    let isAvaliable = false
-    deviceList.map((device) => {
+	let isAvaliable = false
+    if(JSON.stringify(prevDevice) === JSON.stringify({})) {
+		return true
+	}
+	deviceList.map((device) => {
         device.deviceList.some((deviceList) =>{
             if(deviceList.uri === prevDevice.uri && deviceList.available) {
                 isAvaliable = true

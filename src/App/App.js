@@ -6,17 +6,21 @@ import ThemeDecorator from '../../goldstone/ThemeDecorator';
 import MainPanel from '../views/MainPanel';
 import ImageViewerPanel from '../views/ImageViewerPanel/ImageViewerPanel';
 import {changePath} from '../actions/navigationActions';
-import {getImageList} from '../actions/imageActions';
+import {setImageListSuccess} from '../actions/imageActions';
 
 const RoutablePanels = Routable({navigate: 'onBack'}, Panels);
 
-const App = ({getListImage, handleNavigate, path, ...rest}) => {
+const App = ({handleNavigate, path, setImagesFromLaunchParams, ...rest}) => {
 	const onLaunch = async () => {
 		const launchParams = JSON.parse(window.PalmSystem.launchParams);
-		console.log(launchParams);
-		if(launchParams && (launchParams.device_uri)) {
-			await getListImage(launchParams.device_uri)
+		if(launchParams && launchParams.imageList && launchParams.imageList?.image_uri !== '') {
+			const {imageList} = launchParams
+			handleNavigate('home');
+			await setImagesFromLaunchParams(imageList.results)
 			handleNavigate('imageviewer');
+		} else {
+			setImagesFromLaunchParams([])
+			handleNavigate('home');
 		}
 	};
 
@@ -24,7 +28,7 @@ const App = ({getListImage, handleNavigate, path, ...rest}) => {
 		if (typeof window === 'object' && window.PalmSystem) {
 			onLaunch();
 		}
-		document.addEventListener('webOSLaunch', onLaunch);
+		// document.addEventListener('webOSLaunch', onLaunch);
 		document.addEventListener('webOSRelaunch', onLaunch);
 		document.addEventListener('webOSLocaleChange', () => {
 			window.location.reload();
@@ -53,7 +57,7 @@ const mapStateToProps = ({path}) => {
 export default connect(
 	mapStateToProps,
 	{
-		getListImage: getImageList,
-		handleNavigate: changePath
+		handleNavigate: changePath,
+		setImagesFromLaunchParams: setImageListSuccess
 	}
 )(ThemeDecorator(App));

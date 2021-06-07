@@ -29,8 +29,8 @@ const getDeviceList = () => (dispatch, getState) => {
 	Device.getDeviceList({
 		subscribe: true,
 		onSuccess: (res) => {
-			dispatch(changePath('home'))
 			if(!isUsbConnected(res.pluginList, getState().devices.currentDevice)) {
+				dispatch(changePath('home'))
 				dispatch(setImageListSuccess([]));
 				savePrevDevice({})
 			}

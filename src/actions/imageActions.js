@@ -52,7 +52,7 @@ const getImageList = (uri) => (dispatch) => {
 		onSuccess: (res) => {
 			const {returnValue, imageList} = res;
 			if (returnValue) {
-				dispatch(setImageListSuccess(imageList));
+				dispatch(setImageListSuccess(imageList.results));
 				// dispatch(setImageListSuccess(imagesList.imageList.results));
 			}
 		},

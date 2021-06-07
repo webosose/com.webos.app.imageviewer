@@ -2,7 +2,7 @@ import {types} from '../actions/types';
 import {loadPrevDevice} from '../utils/index';
 
 
-let prevDevice = loadPrevDevice;
+let prevDevice = loadPrevDevice();
 
 const initialState = {
 	isLoading: false,

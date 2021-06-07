@@ -12,7 +12,6 @@ import placeHolderImg from '../../../assets/photovideo_splash.png';
 
 const ImageGridList = ({currentImageId, imageList=[], handleNavigate, setSelectedImageId}) => {
 	const updateNavigationPath = (imgIndex) => {
-		console.log(imgIndex);
 		handleNavigate('imageviewer');
 		setSelectedImageId(imgIndex);
 	}
@@ -60,7 +59,7 @@ const ImageGridList = ({currentImageId, imageList=[], handleNavigate, setSelecte
 
 const mapStateToProps = ({images}) => {
 	return {
-		imageList: images.imageList.results,
+		imageList: images.imageList,
 		currentImageId: images.currentImageId
 	};
 };
