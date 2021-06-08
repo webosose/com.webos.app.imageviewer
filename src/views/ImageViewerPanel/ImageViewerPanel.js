@@ -10,7 +10,6 @@ const ImageViewerPanel = ({currentImageId, getListImage, handleNavigate, imageLi
 
     let launchParams = JSON.parse(window.PalmSystem.launchParams);
     useEffect(() => {
-        console.log("launchParams.imageList.images_uri", launchParams.imageList.image_uri)
         if(launchParams && launchParams.imageList && launchParams.imageList?.image_uri !== '') {
             let find_image_index_by_uri = launchParams.imageList && launchParams.imageList.results.findIndex((images) => images.uri === launchParams.imageList.image_uri)
             find_image_index_by_uri === -1 ? setSelectedImageId(0) : setSelectedImageId(find_image_index_by_uri)
