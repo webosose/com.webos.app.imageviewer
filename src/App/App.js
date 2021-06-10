@@ -13,7 +13,7 @@ const RoutablePanels = Routable({navigate: 'onBack'}, Panels);
 const App = ({handleNavigate, path, setImagesFromLaunchParams, ...rest}) => {
 	const onLaunch = async () => {
 		const launchParams = JSON.parse(window.PalmSystem.launchParams);
-		if(launchParams && launchParams.imageList && launchParams.imageList?.image_uri !== '') {
+		if(launchParams && launchParams.imageList && launchParams.imageList.image_uri !== '') {
 			const {imageList} = launchParams
 			handleNavigate('home');
 			await setImagesFromLaunchParams(imageList.results)
