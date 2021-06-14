@@ -4,7 +4,7 @@
 	"vendor": "LGSI",
 	"type": "web",
 	"main": "index.html",
-	"title": "Imager Viewer app",
+	"title": "Image Viewer",
 	"icon": "icon.png",
 	"miniicon": "icon-mini.png",
 	"largeIcon": "icon-large.png",
