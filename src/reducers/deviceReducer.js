@@ -12,7 +12,6 @@ const initialState = {
 };
 
 const deviceListReducer = (state = initialState, action) => {
-	console.log('action', action)
 	switch (action.type) {
 		case types.FETCH_DEVICE_LIST_REQUEST : {
 			return {

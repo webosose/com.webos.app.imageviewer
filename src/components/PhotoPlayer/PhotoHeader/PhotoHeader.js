@@ -4,9 +4,9 @@
  * @module PhotoHeader
  */
 import classNames from 'classnames';
-import {Marquee} from '../../../../goldstone/Marquee/Marquee';
+import {Marquee} from '@enact/sandstone/Marquee/Marquee';
 import PropTypes from 'prop-types';
-import React, {Component} from 'react';
+import {Component} from 'react';
 import css from './PhotoHeader.module.less';
 
 class PhotoHeader extends Component {
@@ -17,7 +17,7 @@ class PhotoHeader extends Component {
 		 * @type {Object}
 		 * @public
 		 */
-		currentPhoto: PropTypes.object,
+		currentPhoto: PropTypes.object
 	};
 
 	constructor (props) {
@@ -61,11 +61,11 @@ class PhotoHeader extends Component {
 
 	findResolution (width, height) {
 		let res = width > 0 && height > 0 ? `${width} X ${height}` : '';
-		return res
+		return res;
 	}
 
 	getDateTimeFromString (date) {
-		return new Date(date).toLocaleString().split(", ")
+		return new Date(date).toLocaleString().split(', ');
 	}
 
 	render = () => {

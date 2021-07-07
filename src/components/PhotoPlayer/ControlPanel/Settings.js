@@ -1,15 +1,14 @@
 /* eslint-disable react/jsx-no-bind */
 
-import React, {useContext, useState} from 'react';
+import {useContext, useState} from 'react';
 import classNames from 'classnames';
 import {$L} from '@enact/i18n/$L';
 import {spotlightDefaultClass} from '@enact/spotlight/SpotlightContainerDecorator';
 import Group from '@enact/ui/Group';
 import PropTypes from 'prop-types';
 import {SettingsContext} from '../Context/SettingsContext';
-import Icon from '../../../../goldstone/Icon';
-import IconButton from '../../../../goldstone/IconButton';
-import RadioButton from '../../../../goldstone/RadioButton';
+import Icon from '@enact/sandstone/Icon';
+import RadioItem from '@enact/sandstone/RadioItem';
 import componentCss from './ControlPanel.module.less';
 
 const options = {
@@ -39,7 +38,7 @@ const Settings = (props) => {
 	};
 
 	const CustomRadioItem = ({selected, ...rest}) => (
-		<RadioButton
+		<RadioItem
 			style={{margin: 0, fontSize: '1rem', padding: '1rem 0.5rem', borderRadius: '1rem'}}
 			selected={selected} {...rest}
 			className={selected ? spotlightDefaultClass : null}
@@ -100,17 +99,15 @@ const Settings = (props) => {
 		<div className={componentCss.setting}>
 			<div className={componentCss.header}>
 				{header}
-				<IconButton
+				<Icon
 					aria-label={$L('Go to Previous')}
-					backgroundOpacity="transparent"
 					className={componentCss.backButton}
 					onClick={closeSettings}
 					size="small"
 					title=""
-					tooltipProps={{'aria-hidden': true}}
 				>
 					arrowhookleft
-				</IconButton>
+				</Icon>
 			</div>
 			{!toggle ? renderSettings() : renderSubSettings()}
 		</div>

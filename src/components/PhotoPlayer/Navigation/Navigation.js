@@ -1,41 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import IconButton from '../../../../goldstone/IconButton/IconButton';
+import Icon from '@enact/sandstone/Icon/Icon';
 import componentCss from './Navigation.module.less';
 
 const Navigation = ({iconSize = 'large', isPlaying = true, leftIconClick, rigthIconClick, togglePlay}) => {
 	return (
 		<div className={componentCss.navigationWrapper} >
-			<IconButton
+			<Icon
 				className={componentCss.icon}
 				disabled={isPlaying}
-				iconOnly
 				onClick={leftIconClick}
 				size={iconSize}
 				title=""
 			>
 				jumpbackward
-			</IconButton>
-			<IconButton
+			</Icon>
+			<Icon
 				className={componentCss.icon}
-				iconOnly
 				onClick={togglePlay}
 				size={iconSize}
 				title=""
 			>
 				{isPlaying ? 'pause' : 'play'}
-			</IconButton>
-			<IconButton
+			</Icon>
+			<Icon
 				className={componentCss.icon}
 				disabled={isPlaying}
-				iconOnly
 				onClick={rigthIconClick}
 				size={iconSize}
 				title=""
 			>
 				jumpforward
-			</IconButton>
+			</Icon>
 		</div>
 	);
 };
@@ -49,6 +46,14 @@ Navigation.propTypes = {
 	 * @public
 	 */
 	iconSize: PropTypes.string,
+
+	/**
+	 * Size of the isPlaying.
+	 *
+	 * @type {String}
+	 * @public
+	 */
+	isPlaying: PropTypes.bool,
 
 	/**
 	 * Callback for letfIcon.

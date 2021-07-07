@@ -57,7 +57,7 @@ const getImageList = (uri) => (dispatch) => {
 			}
 		},
 		onFailure: (err) => {
-			console.log(err);
+			console.log(err);  // eslint-disable-line no-console
 			dispatch(setImageListError(err.errorText));
 		}
 	});
@@ -82,7 +82,7 @@ const setSelectedImage = (imgId) => {
 	return {
 		type: types.SET_SELECTED_IMAGE,
 		imgId
-	}
+	};
 };
 
 export {

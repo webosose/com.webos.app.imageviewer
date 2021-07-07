@@ -1,45 +1,45 @@
-const isUsbConnected = (deviceList, prevDevice={}) => {
-	let isAvaliable = false
-    if(JSON.stringify(prevDevice) === JSON.stringify({})) {
-		return true
+const isUsbConnected = (deviceList, prevDevice = {}) => {
+	let isAvaliable = false;
+	if (JSON.stringify(prevDevice) === JSON.stringify({})) {
+		return true;
 	}
 	deviceList.map((device) => {
-        device.deviceList.some((deviceList) =>{
-            if(deviceList.uri === prevDevice.uri && deviceList.available) {
-                isAvaliable = true
-            }
-        })
-    })
-    return isAvaliable
-}
+		device.deviceList.some((currDevice) => {
+			if (currDevice.uri === prevDevice.uri && currDevice.available) {
+				isAvaliable = true;
+			}
+		});
+	});
+	return isAvaliable;
+};
 
 const savePrevDevice = (state) => {
 	try {
 		const serialisedState = JSON.stringify(state);
 		if (typeof window !== 'undefined') {
-			window.localStorage.setItem("prevDevice", serialisedState);
+			window.localStorage.setItem('prevDevice', serialisedState);
 		}
 	} catch (e) {
-		console.warn(e);
+		console.warn(e); // eslint-disable-line  no-console
 	}
-}
+};
 
 const loadPrevDevice = () => {
 	try {
-		let serialisedState
+		let serialisedState;
 		if (typeof window !== 'undefined') {
-			serialisedState = window.localStorage.getItem("prevDevice");
+			serialisedState = window.localStorage.getItem('prevDevice');
 		}
-		if (serialisedState === null) return undefined;
+		if (serialisedState === null) return {};
 		return JSON.parse(serialisedState);
 	} catch (e) {
-		console.warn(e);
-		return undefined;
+		console.warn(e); // eslint-disable-line  no-console
+		return {};
 	}
-}
+};
 
 export {
 	isUsbConnected,
 	loadPrevDevice,
 	savePrevDevice
-}
+};

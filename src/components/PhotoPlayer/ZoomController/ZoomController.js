@@ -1,7 +1,7 @@
-import React, {useCallback, useRef, useState} from 'react';
+import {useCallback, useRef, useState} from 'react';
 import Image from '@enact/ui/Image';
 import PropTypes from 'prop-types';
-import Slider, {SliderTooltip} from '../../../../goldstone/Slider/Slider';
+import Slider, {SliderTooltip} from '@enact/sandstone/Slider/Slider';
 import {getWidth} from '../util/util';
 import onErrorImg from '../../../../assets/photovideo_splash.png';
 import componentCss from './ZoomController.module.less';
@@ -76,20 +76,22 @@ const ZoomController = ({defaultRatio = 120, imageUrl, sliderMax = 200, sliderMi
 			<div className={componentCss.photoPreview}>
 				<img alt={imageUrl} src={imageUrl} className={componentCss.photo} ref={getMinimapimg} />
 				<div className={componentCss.magnifier} ref={getMinimapThumb} />
-				<div className={componentCss.zoomSlider}>
-					<Slider
-						orientation="vertical"
-						min={sliderMin}
-						max={sliderMax}
-						step={sliderStep}
-						value={zoomRatio}
-						onChange={zoomRatioChanging}
-					>
+			</div>
+			<div className={componentCss.zoomSlider}>
+				<Slider
+					orientation="vertical"
+					min={sliderMin}
+					max={sliderMax}
+					step={sliderStep}
+					value={zoomRatio}
+					onChange={zoomRatioChanging}
+					tooltip={
 						<SliderTooltip
-							percent={100}
+							percent
+							side="above left"
 						/>
-					</Slider>
-				</div>
+					}
+				/>
 			</div>
 		</div>
 	);

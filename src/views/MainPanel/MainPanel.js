@@ -1,11 +1,11 @@
 /* eslint-disable react/jsx-no-bind */
 
-import React, {useEffect} from 'react';
+import {useEffect} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
-import {TabLayout, Tab} from '../../../goldstone/TabLayout';
-import {Panel, Header} from '../../../goldstone/Panels';
+import {TabLayout, Tab} from '@enact/sandstone/TabLayout';
+import {Panel, Header} from '@enact/sandstone/Panels';
 import ImageList from '../../components/ImageList/ImageList';
 import {getDeviceList, setCurrentDevice} from '../../actions/deviceActions';
 import {getImageList, setSelectedImage} from '../../actions/imageActions';
@@ -17,16 +17,16 @@ const MainPanel = ({devices, getListDevice, getListImage, setSelectedDevice, set
 	}, [getListDevice]);
 
 	const handleClose = () => {
-		if(typeof window !== 'undefined') {
+		if (typeof window !== 'undefined') {
 			window.close();
 		}
-	}
+	};
 
 	const onSelectDevice = (device) => {
-		setSelectedImageId(0)
+		setSelectedImageId(0);
 		setSelectedDevice(device);
-		getListImage(device.uri)
-	}
+		getListImage(device.uri);
+	};
 
 	return (
 		<Panel {...rest}>
@@ -38,21 +38,21 @@ const MainPanel = ({devices, getListDevice, getListImage, setSelectedDevice, set
 					return device.deviceList.length > 0 && device.deviceList.map((deviceList, index) => {
 						return (
 							deviceList.available ?
-							<Tab
-								className={css.tab}
-								key={deviceList.uri}
-								icon="usb"
-								// onTabClick={() => getListImage(deviceList.uri)}
-								onTabClick={() => onSelectDevice(deviceList)}
-								title={deviceList.name}
-							>
-								<ImageList
-									key={index}
-								/>
-							</Tab>
-							: null
-						)
-					})
+								<Tab
+									className={css.tab}
+									key={deviceList.uri}
+									icon="usb"
+									// onTabClick={() => getListImage(deviceList.uri)}
+									onTabClick={() => onSelectDevice(deviceList)}
+									title={deviceList.name}
+								>
+									<ImageList
+										key={index}
+									/>
+								</Tab> :
+								null
+						);
+					});
 				})}
 			</TabLayout>
 		</Panel>
@@ -61,8 +61,11 @@ const MainPanel = ({devices, getListDevice, getListImage, setSelectedDevice, set
 
 MainPanel.propTypes = {
 	deviceList: PropTypes.array,
+	devices: PropTypes.array,
 	getListDevice: PropTypes.func,
-	getListImage: PropTypes.func
+	getListImage: PropTypes.func,
+	setSelectedDevice: PropTypes.func,
+	setSelectedImageId: PropTypes.func
 };
 
 const mapStateToProps = ({devices}) => {

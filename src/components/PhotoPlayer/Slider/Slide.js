@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/jsx-no-bind */
 
-import React, {useCallback, useRef, useState} from 'react';
+import {useCallback, useRef, useState} from 'react';
 import classNames from 'classnames';
 import Image from '@enact/ui/Image';
 import PropTypes from 'prop-types';
@@ -12,7 +13,7 @@ import cssComponet from './Slide.module.less';
 
 const Slide = ({currentSlide, fallBackImg = onErrorImg, imgHeight, imgWidth, isPlaying, setControlsHidden, url, width, rotation = 0}) => {
 	const [isImageFailed, setImageFailed] = useState(false);
-	const imageSrc = url
+	const imageSrc = url;
 	const sliceRef = useRef();
 	const stateSettingsContext = useSettingsContext();
 	const contextSettingsState = stateSettingsContext.state || stateSettingsContext;
@@ -24,16 +25,16 @@ const Slide = ({currentSlide, fallBackImg = onErrorImg, imgHeight, imgWidth, isP
 	const fitImgHeight = imgHeight > innerHeight ? innerHeight : imgHeight;
 
 	let fitImageBackground;
-	if(Size === 'Original') {
-		fitImageBackground = {backgroundSize: `${fitImgWidth}px ${fitImgHeight}px`}
+	if (Size === 'Original') {
+		fitImageBackground = {backgroundSize: `${fitImgWidth}px ${fitImgHeight}px`};
 	} else {
-		(imgWidth > innerWidth && imgHeight > innerHeight || imgWidth > innerHeight) ?
-		fitImageBackground = {backgroundSize: `${innerWidth}px ${innerHeight}px`} :
-		fitImageBackground = {backgroundSize: 'contain'}
+		fitImageBackground = (imgWidth > innerWidth && imgHeight > innerHeight || imgWidth > innerHeight) ?
+			{backgroundSize: `${innerWidth}px ${innerHeight}px`} :
+			{backgroundSize: 'contain'};
 	}
 
-	if([90, 270].includes(rotation)) {
-		fitImageBackground = {backgroundSize: `${innerHeight}px auto`}
+	if ([90, 270].includes(rotation)) {
+		fitImageBackground = {backgroundSize: `${innerHeight}px auto`};
 	}
 
 	const style = {
@@ -50,7 +51,7 @@ const Slide = ({currentSlide, fallBackImg = onErrorImg, imgHeight, imgWidth, isP
 		if (isPlaying) {
 			setControlsHidden(false);
 		}
-	}
+	};
 
 	return (
 		<Image
@@ -89,7 +90,10 @@ Slide.propTypes = {
 	 * @type {Number}
 	 * @public
 	 */
+	imgHeight: PropTypes.number,
+	imgWidth: PropTypes.number,
 	index: PropTypes.number,
+	isPlaying: PropTypes.bool,
 	/**
 	 * Slider direction.
 	 *
@@ -103,6 +107,7 @@ Slide.propTypes = {
 	 * @type {Number}
 	 * @public
 	 */
+	setControlsHidden: PropTypes.func,
 	setNextSlide: PropTypes.func,
 	/**
 	 * Slide URL

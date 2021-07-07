@@ -1,14 +1,15 @@
+/* eslint-disable react/jsx-no-bind */
+
 import React, {useCallback} from 'react';
 import {$L} from '@enact/i18n/$L';
 import PropTypes from 'prop-types';
-import IconButton from '../../../../goldstone/IconButton/IconButton';
+import Icon from '@enact/sandstone/Icon/Icon';
 import componentCss from './ControlPanel.module.less';
 
 //  A placeholder to set images.
 const ControlPanel = ({iconSize = 'large', onPlaylistOpen, onZoom, rotateImage, settingsHandler, showSettings}) => {
 
-	const clickHandler = useCallback(e => {
-		const {name} = e.currentTarget;
+	const clickHandler = useCallback(name => {
 		if (name === 'rotate') {
 			settingsHandler(false);
 			rotateImage();
@@ -19,49 +20,44 @@ const ControlPanel = ({iconSize = 'large', onPlaylistOpen, onZoom, rotateImage, 
 
 	return (
 		<div className={componentCss.controlPanel} >
-			<IconButton
+			<Icon
 				aria-label="Rotate"
 				className={componentCss.button}
-				onClick={clickHandler}
+				onClick={() => clickHandler('rotate')}
 				name="rotate"
 				size={iconSize}
-				tooltipText="Rotate"
 				title=""
 			>
 				rotate
-			</IconButton>
-			<IconButton
+			</Icon>
+			<Icon
 				aria-label="Zoom"
 				className={componentCss.button}
 				onClick={onZoom}
 				size={iconSize}
-				tooltipText="Zoom"
 				title=""
 			>
 				zoomin
-			</IconButton>
-			<IconButton
+			</Icon>
+			<Icon
 				aria-label={$L('Settings')}
 				className={componentCss.button}
 				name="setting"
-				onClick={clickHandler}
+				onClick={() => clickHandler('settings')}
 				size={iconSize}
 				title=""
-				tooltipProps={{'aria-hidden': true}}
-				tooltipText={$L('Settings')}
 			>
 				gear
-			</IconButton>
-			<IconButton
+			</Icon>
+			<Icon
 				aria-label="Playlist"
 				className={componentCss.button}
 				onClick={onPlaylistOpen}
 				size={iconSize}
-				tooltipText="Playlist"
 				title=""
 			>
 				list
-			</IconButton>
+			</Icon>
 		</div>
 	);
 };
@@ -82,6 +78,13 @@ ControlPanel.propTypes = {
 	 * @public
 	 */
 	musicHandler: PropTypes.func,
+	/**
+	 * Callback on onPlaylistOpen.
+	 *
+	 * @type {Function}
+	 * @public
+	 */
+	onPlaylistOpen: PropTypes.func,
 	/**
 	 * Callback on zoom.
 	 *

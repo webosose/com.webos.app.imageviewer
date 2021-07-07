@@ -29,10 +29,10 @@ const getDeviceList = () => (dispatch, getState) => {
 	Device.getDeviceList({
 		subscribe: true,
 		onSuccess: (res) => {
-			if(!isUsbConnected(res.pluginList, getState().devices.currentDevice)) {
-				dispatch(changePath('home'))
+			if (!isUsbConnected(res.pluginList, getState().devices.currentDevice)) {
+				dispatch(changePath('home'));
 				dispatch(setImageListSuccess([]));
-				savePrevDevice({})
+				savePrevDevice({});
 			}
 			dispatch(setDeviceListSuccess(res.pluginList));
 		},
@@ -43,11 +43,11 @@ const getDeviceList = () => (dispatch, getState) => {
 };
 
 const setCurrentDevice = (device) => {
-	savePrevDevice(device)
+	savePrevDevice(device);
 	return {
 		type: types.SET_CURRENT_DEVICE,
 		device
-	}
+	};
 };
 
 export {

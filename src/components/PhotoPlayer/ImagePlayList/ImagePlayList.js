@@ -1,14 +1,14 @@
 /* eslint-disable react/jsx-no-bind */
 
-import React from 'react';
 import PropTypes from 'prop-types';
-import ImageItem from '../../../../goldstone/ImageItem/ImageItem';
-import {VirtualGridList} from '../../../../goldstone/VirtualList/VirtualList';
+import ImageItem from '@enact/sandstone/ImageItem/ImageItem';
+import {VirtualGridList} from '@enact/sandstone/VirtualList/VirtualList';
 import ri from '@enact/ui/resolution';
 import placeHolderImg from '../../../../assets/photovideo_splash.png';
+import css from './ImagePlayList.module.less';
 
 const ImagePlayList = ({imageList, updateCurrentIndex}) => {
-    const renderItem = ({index, ...rest}) => {
+	const renderItem = ({index, ...rest}) => {
 		let thumbPath = imageList[index].file_path;
 		let encodedPath = thumbPath.replace(/ /g, '%20');
 
@@ -19,6 +19,7 @@ const ImagePlayList = ({imageList, updateCurrentIndex}) => {
 		return (
 			<ImageItem
 				{...rest}
+				css={css}
 				src={encodedPath}
 				placeholder={placeHolderImg}
 				onClick={() => updateCurrentIndex(index)}
@@ -26,11 +27,11 @@ const ImagePlayList = ({imageList, updateCurrentIndex}) => {
 		);
 	};
 	imageList = imageList || [];
-    return (
+	return (
 		imageList.length === 0 ?
 			<h3>No Photo, Video or folders exist in storage device</h3 > :
 			<VirtualGridList
-				direction='horizontal'
+				direction="horizontal"
 				dataSize={imageList.length}
 				itemRenderer={renderItem}
 				itemSize={{
@@ -40,10 +41,12 @@ const ImagePlayList = ({imageList, updateCurrentIndex}) => {
 				spacing={ri.scale(0.2)}
 			/>
 	);
-}
+};
 
 ImagePlayList.propTypes = {
-	imageList: PropTypes.array
+	imageList: PropTypes.array,
+	index: PropTypes.number,
+	updateCurrentIndex: PropTypes.func
 };
 
 ImagePlayList.default = {
