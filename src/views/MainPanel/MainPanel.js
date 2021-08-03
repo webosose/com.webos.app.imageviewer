@@ -32,6 +32,7 @@ const MainPanel = ({devices, getListDevice, getListImage, setSelectedDevice, set
 		<Panel {...rest}>
 			<Header
 				onClose={handleClose}
+				className={`${css.header} ${css.standard}`}
 			/>
 			<TabLayout>
 				{devices.map((device) => {

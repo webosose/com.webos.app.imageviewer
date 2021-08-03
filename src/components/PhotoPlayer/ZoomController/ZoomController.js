@@ -85,10 +85,10 @@ const ZoomController = ({defaultRatio = 120, imageUrl, sliderMax = 200, sliderMi
 					step={sliderStep}
 					value={zoomRatio}
 					onChange={zoomRatioChanging}
+					css={componentCss}
 					tooltip={
 						<SliderTooltip
 							percent
-							side="above left"
 						/>
 					}
 				/>
